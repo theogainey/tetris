@@ -3,6 +3,7 @@ type TetrominoTypes = 'I' | 'J' | 'L' | 'O' | 'S' | 'T' | 'Z';
 type TetrominoTypeDetails = {
   color: `#${string}`;
   offsets: number[][];
+  rightExtreme: number;
 }
 type LockedTetrominos = {
   type: TetrominoTypes;

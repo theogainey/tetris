@@ -8,11 +8,7 @@ function floorCheck({typeCurrent, yCurrent, dy}: GameState, { height }:HTMLCanva
   return false;
 };
 
-
 export default function update():void{    
-  // if hitting nothing no update
-  // check if hitting floor 
-  // check each y offset point  to see if 
   if(!floorCheck(gameState, canvas)) {
     gameState.yCurrent = gameState.yCurrent + gameState.dy; 
     return;
