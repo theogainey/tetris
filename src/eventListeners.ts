@@ -1,10 +1,10 @@
-import { tetrominoSize, gameState, tetrominos, canvas } from "./constants";
+import { tetrominoSize, gameState, tetrominos } from "./constants";
 
 
 function wallCheck(key: string ):boolean{
   switch (key) {
     case 'ArrowRight':
-      return (gameState.xCurrent + tetrominos[gameState.typeCurrent].rightExtreme < canvas.width)
+      return (gameState.xCurrent + tetrominos[gameState.typeCurrent].rightExtreme < tetrominoSize * 10)
     case 'ArrowLeft' :
       return (gameState.xCurrent - tetrominoSize >= 0)
     default:

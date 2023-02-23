@@ -4,9 +4,18 @@ type TetrominoTypeDetails = {
   color: `#${string}`;
   offsets: number[][];
   rightExtreme: number;
-}
+  downExtreme: number;
+  vertices: number[][];
+};
+
 type LockedTetrominos = {
   type: TetrominoTypes;
+  xStart: number;
+  yStart: number;
+};
+
+type LockedCell = {
+  color: `#${string}`;
   xStart: number;
   yStart: number;
 };
@@ -17,4 +26,6 @@ type GameState = {
   typeCurrent: TetrominoTypes;
   dy: number;
   lockedTetrominos: LockedTetrominos[];
+  lockedCells: LockedCell[];
+  collisionPath:Map<number, number[]>;
 }

@@ -1,14 +1,17 @@
 import { tetrominos, tetrominoSize, gameState, canvas } from "./constants";
-const tetrominoInset = 3;
 
-function drawTetromino(ctx: CanvasRenderingContext2D, type: TetrominoTypeDetails, x:number, y: number) {
-  type.offsets.forEach(([xOffset, yOffset])=>{
+function drawCell(ctx: CanvasRenderingContext2D, color: string, xStart:number, yStart: number) {
     ctx.beginPath();
-    ctx.rect(x + xOffset, y + yOffset, tetrominoSize, tetrominoSize);
-    ctx.fillStyle = type.color;
+    ctx.rect(xStart, yStart, tetrominoSize, tetrominoSize);
+    ctx.fillStyle = color;
     ctx.fill();
     ctx.stroke();
     ctx.closePath(); 
+}
+
+function drawTetromino(ctx: CanvasRenderingContext2D, type: TetrominoTypeDetails, x:number, y: number) {
+  type.offsets.forEach(([xOffset, yOffset])=>{
+    drawCell(ctx, type.color, x + xOffset, y + yOffset)
   })
 }
 
@@ -16,9 +19,9 @@ function drawTetromino(ctx: CanvasRenderingContext2D, type: TetrominoTypeDetails
 export default function render() {
   const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  // draw each tetromino 
   drawTetromino(ctx, tetrominos[gameState.typeCurrent], gameState.xCurrent, gameState.yCurrent);
-  gameState.lockedTetrominos.forEach(({type, xStart, yStart})=> {
-    drawTetromino(ctx, tetrominos[type], xStart, yStart);
+  
+  gameState.lockedCells.forEach(({color, xStart, yStart})=> {
+    drawCell(ctx, color, xStart, yStart);
   });
 };
