@@ -1,5 +1,5 @@
-import { tetrominos, tetrominoSize, gameState, canvas } from "./constants";
-
+import { tetrominos, tetrominoSize, gameState } from "./constants";
+import { randomTetromino } from './utility'
 // if y value is small than smallest y at x point in collision point then no collision is possible even with a jagged path
 // returns true if no collision
 function minCollisionCheck(y: number, yCollisionPoints: number[]) {
@@ -39,7 +39,7 @@ export default function update():void{
   });
   
   // //add to collisionPath 
-  tetrominos[gameState.typeCurrent].vertices.forEach(([x, y]) => {
+  tetrominos[gameState.typeCurrent].offsets.forEach(([x, y]) => {
     const yPoints = gameState.collisionPath.get(x + gameState.xCurrent);
     yPoints 
     ? gameState.collisionPath.set(x + gameState.xCurrent, yPoints.concat(y + gameState.yCurrent))
@@ -49,4 +49,5 @@ export default function update():void{
   // start new block 
   gameState.xCurrent = 0;
   gameState.yCurrent = 0;
+  gameState.typeCurrent = randomTetromino();
 };

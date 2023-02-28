@@ -1,3 +1,5 @@
+import { randomTetromino } from "./utility";
+
 export const tetrominoSize = 30;
 export const gravity = 48; // frames it takes to fall 1 line;
 
@@ -60,7 +62,7 @@ export const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
 export const gameState: GameState = {
   xCurrent: 0,
   yCurrent: 0, 
-  typeCurrent: 'Z',
+  typeCurrent: randomTetromino(),
   dy: tetrominoSize/gravity,
   lockedTetrominos: [],
   lockedCells: [],
