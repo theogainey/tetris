@@ -40,11 +40,15 @@ export default function update():void{
   
   // //add to collisionPath 
   tetrominos[gameState.typeCurrent].offsets.forEach(([x, y]) => {
-    const yPoints = gameState.collisionPath.get(x + gameState.xCurrent);
-    yPoints 
-    ? gameState.collisionPath.set(x + gameState.xCurrent, yPoints.concat(y + gameState.yCurrent))
+    const yStartPoints = gameState.collisionPath.get(x + gameState.xCurrent);
+    const yEndPoints = gameState.collisionPath.get(x + tetrominoSize + gameState.xCurrent);
+    yStartPoints 
+    ? gameState.collisionPath.set(x + gameState.xCurrent, yStartPoints.concat(y + gameState.yCurrent))
     : gameState.collisionPath.set(x + gameState.xCurrent, [y + gameState.yCurrent])
-  })
+    yEndPoints 
+    ? gameState.collisionPath.set(x + tetrominoSize + gameState.xCurrent, yEndPoints.concat(y + gameState.yCurrent))
+    : gameState.collisionPath.set(x + tetrominoSize + gameState.xCurrent, [y + gameState.yCurrent])
+  });
 
   // start new block 
   gameState.xCurrent = 0;
