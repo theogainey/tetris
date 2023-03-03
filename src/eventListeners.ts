@@ -1,35 +1,44 @@
 import { tetrominoSize, gameState, tetrominos } from "./constants";
 
-
-function wallCheck(key: string ):boolean{
-  switch (key) {
-    case 'ArrowRight':
-      return (gameState.xCurrent + tetrominos[gameState.typeCurrent].rightExtreme < tetrominoSize * 10)
-    case 'ArrowLeft' :
-      return (gameState.xCurrent - tetrominoSize >= 0)
-    default:
-      return false;
-  }
+function noHorizontalCollisionCheck(newXCurrent: number) {
+  return noWallCollision(newXCurrent) && noTetrominoCollisionCheck(newXCurrent);
 };
 
-function horizontalMove(key: string):void {
-  switch (key) {
-    case 'ArrowRight':
-      gameState.xCurrent = gameState.xCurrent + tetrominoSize;
-      break;
-    case 'ArrowLeft' :
-      gameState.xCurrent = gameState.xCurrent - tetrominoSize
-      break;
-    default:
-      gameState.xCurrent = gameState.xCurrent - tetrominoSize; 
-      break;
-  }
-
+function noTetrominoCollisionCheck(newXCurrent: number) {
+  if(newXCurrent < 0) return false;
+  const { offsets } = tetrominos[gameState.typeCurrent]; 
+  // I can make this check less cells 
+  return gameState.lockedCells.every(({xStart, yStart}) => offsets.every(([x, y]) =>{
+    const collisionDetected = xStart < x + newXCurrent + tetrominoSize &&
+    xStart + tetrominoSize > x + newXCurrent && 
+    yStart < y +  gameState.yCurrent + tetrominoSize &&
+    tetrominoSize + yStart > y + gameState.yCurrent;
+    return !collisionDetected;
+  }))
 }
+function noWallCollision(newXCurrent: number) {
+  if(newXCurrent < 0) return false;
+  return tetrominos[gameState.typeCurrent].offsets.every(([x]) =>{
+    return x + newXCurrent + tetrominoSize <= tetrominoSize * 10
+  });
+}
+
 export default function eventListeners() {
   window.addEventListener("keydown", (event) => {
-    if(wallCheck(event.key)){
-      horizontalMove(event.key);
+    let newXCurrent = 0;
+    switch (event.key) {
+      case 'ArrowRight':
+        newXCurrent = gameState.xCurrent + tetrominoSize;
+        break;
+      case 'ArrowLeft' :
+        newXCurrent = gameState.xCurrent - tetrominoSize;
+        break;
+      default:
+        break;
+    }
+  
+    if(noHorizontalCollisionCheck(newXCurrent)){
+      gameState.xCurrent = newXCurrent;
     }
   });
 };
