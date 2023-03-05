@@ -50,8 +50,5 @@ export const gameState: GameState = {
   yCurrent: 0, 
   typeCurrent: randomTetromino(),
   dy: tetrominoSize/gravity,
-  lockedTetrominos: [],
   lockedCells: [],
-  verticalCollisionPoints: new Map(),
-  horizontalCollisionPoints: new Map(),
 };

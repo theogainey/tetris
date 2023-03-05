@@ -1,26 +1,19 @@
 import { tetrominos, tetrominoSize, gameState } from "./constants";
 import { randomTetromino } from './utility'
-// if y value is small than smallest y at x point in collision point then no collision is possible even with a jagged path
-// returns true if no collision
-function minCollisionCheck(y: number, yCollisionPoints: number[]) {
-  const minY = Math.min(...yCollisionPoints)
-  return y < minY;
-}
 
 function noVerticalCollisionCheck() {
-  const {offsets} = tetrominos[gameState.typeCurrent]; 
-  const potentialCollisionPoints = offsets.map(([xOffset, yOffset]) => ({
-    y: yOffset + tetrominoSize + gameState.yCurrent,
-    xStart: xOffset + gameState.xCurrent,
-    xEnd: xOffset + tetrominoSize + gameState.xCurrent,
+  const { offsets } = tetrominos[gameState.typeCurrent]; 
+  if(!offsets.every(([_x, y]) => y + gameState.yCurrent <= tetrominoSize * 19)) return false;
+  const xStarts = offsets.map(([xOffset]) => xOffset + gameState.xCurrent);
+  const lockedCellsWithSameXStarts = gameState.lockedCells.filter(({ xStart } ) => xStarts.includes(xStart));
+  return lockedCellsWithSameXStarts.every(({xStart, yStart}) => offsets.every(([x, y]) =>{
+    const collisionDetected = xStart < x + gameState.xCurrent + tetrominoSize &&
+    xStart + tetrominoSize > x + gameState.xCurrent && 
+    yStart < y +  gameState.yCurrent + gameState.dy + tetrominoSize &&
+    tetrominoSize + yStart > y + gameState.yCurrent + gameState.dy;
+    return !collisionDetected;
   }));
-  return potentialCollisionPoints.every(({xStart, xEnd, y}) => {
-    // right now this assumes no jagged stacks. Fix this next
-    const xStartCollisionPoints =  gameState.verticalCollisionPoints.get(xStart) ?? [tetrominoSize * 20];    
-    const xEndCollisionPoints =  gameState.verticalCollisionPoints.get(xEnd) ?? [tetrominoSize * 20];    
-    const matchingLedges = xStartCollisionPoints.filter((x) => xEndCollisionPoints.includes(x));
-    return minCollisionCheck(y, matchingLedges) // || jagged check
-  })
+
 };
 
 export default function update():void{    
@@ -39,18 +32,6 @@ export default function update():void{
     });
   });
   
-  // //add to verticalCollisionPoints and horizontalCollisionPoints
-  tetrominos[gameState.typeCurrent].offsets.forEach(([x, y]) => {
-    const verticalCollisionStartPoints = gameState.verticalCollisionPoints.get(x + gameState.xCurrent);
-    const verticalCollisionEndPoints = gameState.verticalCollisionPoints.get(x + tetrominoSize + gameState.xCurrent);
-    verticalCollisionStartPoints 
-    ? gameState.verticalCollisionPoints.set(x + gameState.xCurrent, verticalCollisionStartPoints.concat(y + gameState.yCurrent))
-    : gameState.verticalCollisionPoints.set(x + gameState.xCurrent, [y + gameState.yCurrent])
-    verticalCollisionEndPoints 
-    ? gameState.verticalCollisionPoints.set(x + tetrominoSize + gameState.xCurrent, verticalCollisionEndPoints.concat(y + gameState.yCurrent))
-    : gameState.verticalCollisionPoints.set(x + tetrominoSize + gameState.xCurrent, [y + gameState.yCurrent])
-  });
-
   // start new block 
   gameState.xCurrent = 0;
   gameState.yCurrent = 0;

@@ -23,8 +23,5 @@ type GameState = {
   yCurrent: number;
   typeCurrent: TetrominoTypes;
   dy: number;
-  lockedTetrominos: LockedTetrominos[];
   lockedCells: LockedCell[];
-  verticalCollisionPoints:Map<number, number[]>;
-  horizontalCollisionPoints:Map<number, number[]>;
 }
