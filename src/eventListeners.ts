@@ -25,20 +25,19 @@ function noWallCollision(newXCurrent: number) {
 
 export default function eventListeners() {
   window.addEventListener("keydown", (event) => {
-    let newXCurrent = 0;
     switch (event.key) {
       case 'ArrowRight':
-        newXCurrent = gameState.xCurrent + tetrominoSize;
-        break;
+        if(noHorizontalCollisionCheck(gameState.xCurrent + tetrominoSize)){
+          gameState.xCurrent = gameState.xCurrent + tetrominoSize;
+        }    
+        return;
       case 'ArrowLeft' :
-        newXCurrent = gameState.xCurrent - tetrominoSize;
-        break;
+        if(noHorizontalCollisionCheck(gameState.xCurrent - tetrominoSize)){
+          gameState.xCurrent = gameState.xCurrent - tetrominoSize;
+        }
+        return;
       default:
-        break;
+        return;
     }
-  
-    if(noHorizontalCollisionCheck(newXCurrent)){
-      gameState.xCurrent = newXCurrent;
-    }
-  });
+    });
 };

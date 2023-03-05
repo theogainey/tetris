@@ -3,7 +3,7 @@ import { randomTetromino } from './utility'
 
 function noVerticalCollisionCheck() {
   const { offsets } = tetrominos[gameState.typeCurrent]; 
-  if(!offsets.every(([_x, y]) => y + gameState.yCurrent <= tetrominoSize * 19)) return false;
+  if(!offsets.every(([_x, y]) => y + gameState.yCurrent  + gameState.dy <= tetrominoSize * 19)) return false;
   const xStarts = offsets.map(([xOffset]) => xOffset + gameState.xCurrent);
   const lockedCellsWithSameXStarts = gameState.lockedCells.filter(({ xStart } ) => xStarts.includes(xStart));
   return lockedCellsWithSameXStarts.every(({xStart, yStart}) => offsets.every(([x, y]) =>{
@@ -24,7 +24,8 @@ export default function update():void{
 
   // if hitting floor add to cells
   // Normalize the cells position meaning each start value is a multiple of tetromino size
-  tetrominos[gameState.typeCurrent].offsets.forEach(([xOffset, yOffset]) => {
+  console.log(`x ${gameState.xCurrent} y${gameState.yCurrent}`)
+  tetrominos[gameState.typeCurrent].offsets.forEach(([xOffset, yOffset]) => {    
     gameState.lockedCells.push({
       color: tetrominos[gameState.typeCurrent].color,
       xStart: gameState.xCurrent + xOffset,
