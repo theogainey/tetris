@@ -51,4 +51,5 @@ export const gameState: GameState = {
   typeCurrent: randomTetromino(),
   dy: tetrominoSize/gravity,
   lockedCells: [],
+  lockDelayFrame: -1,
 };

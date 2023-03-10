@@ -5,7 +5,7 @@ function drawCell(ctx: CanvasRenderingContext2D, color: string, xStart:number, y
     ctx.fillRect(xStart, yStart, tetrominoSize, tetrominoSize);
     ctx.strokeRect(xStart, yStart, tetrominoSize, tetrominoSize);
     ctx.shadowBlur = 20;
-    ctx.shadowColor = '#000000';
+    ctx.shadowColor = '#323232';
     ctx.fillRect(xStart + 5, yStart + 5, tetrominoSize - 10, tetrominoSize - 10);
     ctx.shadowBlur = 0;
 }

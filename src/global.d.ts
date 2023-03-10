@@ -24,4 +24,5 @@ type GameState = {
   typeCurrent: TetrominoTypes;
   dy: number;
   lockedCells: LockedCell[];
+  lockDelayFrame: number;
 }
