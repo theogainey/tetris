@@ -1,12 +1,13 @@
 import { tetrominos, tetrominoSize, gameState } from "./constants";
-import { randomTetromino, spawn } from './utility'
+import { spawn } from './utility'
 
 function noVerticalCollisionCheck() {
-  const { offsets } = tetrominos[gameState.typeCurrent]; 
-  if(!offsets.every(([_x, y]) => y + gameState.yCurrent  + gameState.dy <= tetrominoSize * 19)) return false;
-  const xStarts = offsets.map(([xOffset]) => xOffset + gameState.xCurrent);
+  const offsets = tetrominos[gameState.typeCurrent].offsets; 
+  const offsetsCurrent = offsets[gameState.rotation];
+  if(!offsetsCurrent.every(([_x, y]) => y + gameState.yCurrent  + gameState.dy <= tetrominoSize * 19)) return false;
+  const xStarts = offsetsCurrent.map(([xOffset]) => xOffset + gameState.xCurrent);
   const lockedCellsWithSameXStarts = gameState.lockedCells.filter(({ xStart } ) => xStarts.includes(xStart));
-  return lockedCellsWithSameXStarts.every(({xStart, yStart}) => offsets.every(([x, y]) =>{
+  return lockedCellsWithSameXStarts.every(({xStart, yStart}) => offsetsCurrent.every(([x, y]) =>{
     const collisionDetected = xStart < x + gameState.xCurrent + tetrominoSize &&
     xStart + tetrominoSize > x + gameState.xCurrent && 
     yStart < y +  gameState.yCurrent + gameState.dy + tetrominoSize &&
@@ -33,9 +34,7 @@ export default function update():void{
   gameState.lockDelayFrame = -1;
 
   // if hitting floor add to cells
-  // Normalize the cells position meaning each start value is a multiple of tetromino size
-  console.log(`x ${gameState.xCurrent} y${gameState.yCurrent}`)
-  tetrominos[gameState.typeCurrent].offsets.forEach(([xOffset, yOffset]) => {    
+  tetrominos[gameState.typeCurrent].offsets[gameState.rotation].forEach(([xOffset, yOffset]) => {    
     gameState.lockedCells.push({
       color: tetrominos[gameState.typeCurrent].color,
       xStart: gameState.xCurrent + xOffset,
@@ -49,4 +48,5 @@ export default function update():void{
   gameState.xCurrent = newTetromino.xCurrent;
   gameState.yCurrent = newTetromino.yCurrent;
   gameState.typeCurrent = newTetromino.typeCurrent;
+  gameState.rotation = 0;
 };

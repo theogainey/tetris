@@ -11,7 +11,7 @@ function drawCell(ctx: CanvasRenderingContext2D, color: string, xStart:number, y
 }
 
 function drawTetromino(ctx: CanvasRenderingContext2D, type: TetrominoTypeDetails, x:number, y: number) {
-  type.offsets.forEach(([xOffset, yOffset])=>{
+  type.offsets[gameState.rotation].forEach(([xOffset, yOffset])=>{
     drawCell(ctx, type.color, x + xOffset, y + yOffset)
   })
 }

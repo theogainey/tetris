@@ -2,7 +2,7 @@ type TetrominoTypes = 'I' | 'J' | 'L' | 'O' | 'S' | 'T' | 'Z';
 
 type TetrominoTypeDetails = {
   color: `#${string}`;
-  offsets: number[][];
+  offsets: number[][][];
 };
 
 type LockedTetrominos = {
@@ -21,6 +21,7 @@ type GameState = {
   xCurrent: number;
   yCurrent: number;
   typeCurrent: TetrominoTypes;
+  rotation: number;
   dy: number;
   lockedCells: LockedCell[];
   lockDelayFrame: number;
