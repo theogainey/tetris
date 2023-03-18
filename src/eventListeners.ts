@@ -17,9 +17,8 @@ function noTetrominoCollisionCheck(newXCurrent: number) {
   }))
 }
 function noWallCollision(newXCurrent: number) {
-  if(newXCurrent < 0) return false;
   return tetrominos[gameState.typeCurrent].offsets.every(([x]) =>{
-    return x + newXCurrent + tetrominoSize <= tetrominoSize * 10
+    return x + newXCurrent + tetrominoSize <= tetrominoSize * 10 && x + newXCurrent >= 0
   });
 }
 

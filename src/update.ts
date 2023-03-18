@@ -1,5 +1,5 @@
 import { tetrominos, tetrominoSize, gameState } from "./constants";
-import { randomTetromino } from './utility'
+import { randomTetromino, spawn } from './utility'
 
 function noVerticalCollisionCheck() {
   const { offsets } = tetrominos[gameState.typeCurrent]; 
@@ -44,7 +44,9 @@ export default function update():void{
   });
   
   // start new block 
-  gameState.xCurrent = 0;
-  gameState.yCurrent = 0;
-  gameState.typeCurrent = randomTetromino();
+  const newTetromino = spawn();
+
+  gameState.xCurrent = newTetromino.xCurrent;
+  gameState.yCurrent = newTetromino.yCurrent;
+  gameState.typeCurrent = newTetromino.typeCurrent;
 };
