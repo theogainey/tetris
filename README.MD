@@ -17,8 +17,6 @@ npm run dev
 
 Feature | Description | Priority
 --- | --- | ---
-Line Clear | [link](https://tetris.fandom.com/wiki/Line_clear) | High
-Line Clear Gravity(Naive) | [link](https://tetris.fandom.com/wiki/Line_clear#Naive) | High
 Rotation Bug | issue | High
 Wall Kicks | [link](https://tetris.fandom.com/wiki/Wall_kick) | Medium
 Soft Drops | [link](https://tetris.fandom.com/wiki/Soft_Drop) | Medium 

@@ -17,6 +17,42 @@ function noVerticalCollisionCheck() {
 
 };
 
+function shiftRows(yLowerBounds:number) {
+  gameState.lockedCells = gameState.lockedCells.map((tetromino) => 
+    tetromino.yStart < yLowerBounds
+    ? {
+      ...tetromino,
+      yStart: tetromino.yStart + tetrominoSize
+    }
+    : tetromino
+  )
+}
+
+function clearRows(){
+  const offsets = tetrominos[gameState.typeCurrent].offsets; 
+  const offsetsCurrent = offsets[gameState.rotation];
+  const yStarts = offsetsCurrent.map(([yOffset]) => yOffset + gameState.yCurrent);
+  const uniqueYs = [...new Set(yStarts)];
+  const rowsToClear = uniqueYs.filter((y)=> {
+    if(gameState.lockedCells.filter(({yStart})=> yStart === y).length === 10){
+      return true;
+    }
+  });
+  if(rowsToClear.length>0){
+    const yDropFloor =  Math.min(...rowsToClear);
+    gameState.lockedCells = gameState.lockedCells.filter(({yStart}) => !rowsToClear.includes(yStart));
+    gameState.lockedCells = gameState.lockedCells.map((cell)=>{
+      if(yDropFloor > cell.yStart){
+        return {
+          ...cell,
+          yStart: cell.yStart + (tetrominoSize * rowsToClear.length)
+        };
+      }
+      return cell;
+    })
+  }
+}
+
 export default function update():void{  
   if(noVerticalCollisionCheck()) {    
     gameState.yCurrent = gameState.yCurrent + gameState.dy; 
@@ -42,6 +78,7 @@ export default function update():void{
     });
   });
   
+  clearRows();
   // start new block 
   const newTetromino = spawn();
 
