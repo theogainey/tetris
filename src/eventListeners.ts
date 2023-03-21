@@ -1,5 +1,4 @@
 import { tetrominoSize, gameState, tetrominos } from "./constants";
-import { rotate } from "./utility";
 
 function noHorizontalCollisionCheck(newXCurrent: number) {
   return noWallCollision(newXCurrent) && noTetrominoCollisionCheck(newXCurrent);
@@ -37,7 +36,15 @@ export default function eventListeners() {
         }
         return;
       case 'ArrowUp': 
-        rotate();
+        const oldRotation = gameState.rotation;
+        let newRotation = gameState.rotation + 1;
+        if(newRotation === tetrominos[gameState.typeCurrent].offsets.length){
+          newRotation = 0;
+        }
+        gameState.rotation = newRotation
+        if(!noHorizontalCollisionCheck(gameState.xCurrent)){
+          gameState.rotation = oldRotation;
+        }
       return;
       default:
         return;

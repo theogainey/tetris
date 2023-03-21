@@ -17,17 +17,6 @@ function noVerticalCollisionCheck() {
 
 };
 
-function shiftRows(yLowerBounds:number) {
-  gameState.lockedCells = gameState.lockedCells.map((tetromino) => 
-    tetromino.yStart < yLowerBounds
-    ? {
-      ...tetromino,
-      yStart: tetromino.yStart + tetrominoSize
-    }
-    : tetromino
-  )
-}
-
 function clearRows(){
   const offsets = tetrominos[gameState.typeCurrent].offsets; 
   const offsetsCurrent = offsets[gameState.rotation];

@@ -1,4 +1,4 @@
-import { gameState, tetrominoSize, tetrominos } from "./constants";
+import { tetrominoSize, } from "./constants";
 
 export function randomTetromino() {
   const tetrominos:TetrominoTypes[] = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
@@ -17,12 +17,3 @@ export function spawn() {
     yCurrent: -2 * tetrominoSize,   
   }
 } 
-
-export function rotate() {
-  const newRotation = gameState.rotation + 1;
-  if(newRotation === tetrominos[gameState.typeCurrent].offsets.length){
-    gameState.rotation = 0;
-    return
-  }
-  gameState.rotation = newRotation;
-}
