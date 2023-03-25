@@ -8,12 +8,11 @@ export function randomTetromino() {
 function shouldSpawnCenter(tetrominoType:TetrominoTypes) {
   return tetrominoType === 'I' || tetrominoType === 'O';
 }
-
 export function spawn() {
   const typeCurrent = randomTetromino();
   return {
     typeCurrent: typeCurrent,
-    xCurrent: shouldSpawnCenter(typeCurrent) ? 5 * tetrominoSize : 4.5 * tetrominoSize,
-    yCurrent: -2 * tetrominoSize,   
+    xCurrent: shouldSpawnCenter(typeCurrent) ? 5 : 4.5,
+    yCurrent: shouldSpawnCenter(typeCurrent) ? 1 : 0.5,   
   }
 } 

@@ -1,4 +1,4 @@
-import { tetrominoSize, gameState, tetrominos } from "./constants";
+import { gameState, tetrominos } from "./constants";
 
 function noHorizontalCollisionCheck(newXCurrent: number) {
   return noWallCollision(newXCurrent) && noTetrominoCollisionCheck(newXCurrent);
@@ -7,18 +7,16 @@ function noHorizontalCollisionCheck(newXCurrent: number) {
 function noTetrominoCollisionCheck(newXCurrent: number) {
   if(newXCurrent < 0) return false;
   const { offsets } = tetrominos[gameState.typeCurrent]; 
-  // I can make this check less cells 
-  return gameState.lockedCells.every(({xStart, yStart}) => offsets[gameState.rotation].every(([x, y]) =>{
-    const collisionDetected = xStart < x + newXCurrent + tetrominoSize &&
-    xStart + tetrominoSize > x + newXCurrent && 
-    yStart < y +  gameState.yCurrent + tetrominoSize &&
-    tetrominoSize + yStart > y + gameState.yCurrent;
-    return !collisionDetected;
-  }))
+  const offsetsCurrent = offsets[gameState.rotation];  
+  return offsetsCurrent.every(([x, y])=> {
+    const lockedCellsWithSameXStart: LockedCell[] = gameState.lockedCells.filter(({ xStart } ) => xStart === newXCurrent + x);
+    return lockedCellsWithSameXStart.every(({yStart}) => y + gameState.yCurrent !== yStart)
+  })
 }
+
 function noWallCollision(newXCurrent: number) {
   return tetrominos[gameState.typeCurrent].offsets[gameState.rotation].every(([x]) =>{
-    return x + newXCurrent + tetrominoSize <= tetrominoSize * 10 && x + newXCurrent >= 0
+    return x + newXCurrent <= 9 && x + newXCurrent >= 0
   });
 }
 
@@ -26,13 +24,13 @@ export default function eventListeners() {
   window.addEventListener("keydown", (event) => {
     switch (event.key) {
       case 'ArrowRight':
-        if(noHorizontalCollisionCheck(gameState.xCurrent + tetrominoSize)){
-          gameState.xCurrent = gameState.xCurrent + tetrominoSize;
+        if(noHorizontalCollisionCheck(gameState.xCurrent + 1)){
+          gameState.xCurrent = gameState.xCurrent + 1;
         }    
         return;
       case 'ArrowLeft' :
-        if(noHorizontalCollisionCheck(gameState.xCurrent - tetrominoSize)){
-          gameState.xCurrent = gameState.xCurrent - tetrominoSize;
+        if(noHorizontalCollisionCheck(gameState.xCurrent - 1)){
+          gameState.xCurrent = gameState.xCurrent - 1;
         }
         return;
       case 'ArrowUp': 

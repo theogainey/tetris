@@ -22,7 +22,7 @@ type GameState = {
   yCurrent: number;
   typeCurrent: TetrominoTypes;
   rotation: number;
-  dy: number;
+  framesTillDrop: number;
   lockedCells: LockedCell[];
   lockDelayFrame: number;
 }

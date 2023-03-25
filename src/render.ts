@@ -1,6 +1,8 @@
 import { tetrominos, tetrominoSize, gameState, canvas } from "./constants";
 
-function drawCell(ctx: CanvasRenderingContext2D, color: string, xStart:number, yStart: number) {
+function drawCell(ctx: CanvasRenderingContext2D, color: string, x:number, y: number) {
+    const xStart = x * tetrominoSize;
+    const yStart = y * tetrominoSize;
     ctx.fillStyle = color;
     ctx.fillRect(xStart, yStart, tetrominoSize, tetrominoSize);
     ctx.strokeRect(xStart, yStart, tetrominoSize, tetrominoSize);

@@ -1,55 +1,52 @@
-import { tetrominos, tetrominoSize, gameState } from "./constants";
+import { tetrominos, gameState, gravity } from "./constants";
 import { spawn } from './utility'
 
 function noVerticalCollisionCheck() {
   const offsets = tetrominos[gameState.typeCurrent].offsets; 
-  const offsetsCurrent = offsets[gameState.rotation];
-  if(!offsetsCurrent.every(([_x, y]) => y + gameState.yCurrent  + gameState.dy <= tetrominoSize * 19)) return false;
-  const xStarts = offsetsCurrent.map(([xOffset]) => xOffset + gameState.xCurrent);
-  const lockedCellsWithSameXStarts = gameState.lockedCells.filter(({ xStart } ) => xStarts.includes(xStart));
-  return lockedCellsWithSameXStarts.every(({xStart, yStart}) => offsetsCurrent.every(([x, y]) =>{
-    const collisionDetected = xStart < x + gameState.xCurrent + tetrominoSize &&
-    xStart + tetrominoSize > x + gameState.xCurrent && 
-    yStart < y +  gameState.yCurrent + gameState.dy + tetrominoSize &&
-    tetrominoSize + yStart > y + gameState.yCurrent + gameState.dy;
-    return !collisionDetected;
-  }));
-
+  const offsetsCurrent = offsets[gameState.rotation];  
+  if(!offsetsCurrent.every(([_x, y])=> y + gameState.yCurrent <19)) return false;
+  return offsetsCurrent.every(([x, y])=> {
+    const lockedCellsWithSameXStart: LockedCell[] = gameState.lockedCells.filter(({ xStart } ) => xStart === x + gameState.xCurrent);
+    return lockedCellsWithSameXStart.every(({yStart}) => y + gameState.yCurrent + 1 !== yStart)
+  })
 };
 
 function clearRows(){
   const offsets = tetrominos[gameState.typeCurrent].offsets; 
   const offsetsCurrent = offsets[gameState.rotation];
-  const yStarts = offsetsCurrent.map(([yOffset]) => yOffset + gameState.yCurrent);
-  const uniqueYs = [...new Set(yStarts)];
-  const rowsToClear = uniqueYs.filter((y)=> {
-    if(gameState.lockedCells.filter(({yStart})=> yStart === y).length === 10){
-      return true;
+  const yS = offsetsCurrent.map(([_x,y])=> y + gameState.yCurrent);
+  const uniqueYs = [...new Set(yS)];
+  const rowsToClear:number[] = [];
+  uniqueYs.forEach((y)=>{
+    const cellsInRow = gameState.lockedCells.filter(({yStart})=> yStart === y);
+    if(cellsInRow.length === 10) {
+      gameState.lockedCells = gameState.lockedCells.filter(({yStart})=> yStart !== y);
+      rowsToClear.push(y)
     }
-  });
-  if(rowsToClear.length>0){
-    const yDropFloor =  Math.min(...rowsToClear);
-    gameState.lockedCells = gameState.lockedCells.filter(({yStart}) => !rowsToClear.includes(yStart));
-    gameState.lockedCells = gameState.lockedCells.map((cell)=>{
-      if(yDropFloor > cell.yStart){
-        return {
-          ...cell,
-          yStart: cell.yStart + (tetrominoSize * rowsToClear.length)
-        };
-      }
-      return cell;
-    })
-  }
+  })
+  gameState.lockedCells = gameState.lockedCells.map((cell) => {
+    const rowsClearedBelowCell = rowsToClear.filter((y)=> y > cell.yStart);
+    return{
+      ...cell,
+      yStart: cell.yStart + rowsClearedBelowCell.length,
+    }
+  })
 }
 
-export default function update():void{  
-  if(noVerticalCollisionCheck()) {    
-    gameState.yCurrent = gameState.yCurrent + gameState.dy; 
-    return;
-  };
-  // lock delay sequence currently can move more than 1 space
+export default function update():void{ 
+  if(noVerticalCollisionCheck()){
+    if(gameState.framesTillDrop > 0 && gameState.lockDelayFrame === -1) {
+      gameState.framesTillDrop = gameState.framesTillDrop -1;
+      return;
+    }
+    if(gameState.lockDelayFrame === -1){
+      gameState.framesTillDrop = gravity;
+      gameState.yCurrent = gameState.yCurrent + 1;  
+      return;
+    }
+  }
   if(gameState.lockDelayFrame === -1) {
-    gameState.lockDelayFrame =0;
+    gameState.lockDelayFrame = 0;
     return
   } 
   if(gameState.lockDelayFrame <30){
@@ -66,13 +63,13 @@ export default function update():void{
       yStart: gameState.yCurrent + yOffset,
     });
   });
-  
   clearRows();
-  // start new block 
+
   const newTetromino = spawn();
 
   gameState.xCurrent = newTetromino.xCurrent;
   gameState.yCurrent = newTetromino.yCurrent;
   gameState.typeCurrent = newTetromino.typeCurrent;
   gameState.rotation = 0;
+
 };

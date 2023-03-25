@@ -5,37 +5,37 @@ export const gravity = 48; // frames it takes to fall 1 line;
 
 const tetrominoPositions = {
   I: {
-    position1: [[-2 * tetrominoSize, -tetrominoSize], [-tetrominoSize, -tetrominoSize],  [0, -tetrominoSize],  [tetrominoSize, -tetrominoSize]],
-    position2: [[0, -2 * tetrominoSize], [0, -tetrominoSize], [0,0], [0, tetrominoSize]],
+    position1: [[-2, -1], [-1, -1],  [0, -1],  [1, -1]],
+    position2: [[0, -2 ], [0, -1], [0,0], [0, 1]],
   },
   J: {
-    position1: [[-1.5 * tetrominoSize, -1.5 * tetrominoSize], [-1.5 * tetrominoSize, -0.5 * tetrominoSize],  [-0.5 * tetrominoSize, -0.5 * tetrominoSize],  [0.5 * tetrominoSize, -0.5 * tetrominoSize]],
-    position2: [[-0.5 * tetrominoSize, -1.5 * tetrominoSize], [0.5 * tetrominoSize, -1.5 * tetrominoSize], [-0.5 * tetrominoSize,-0.5 * tetrominoSize], [-0.5 * tetrominoSize, 0.5 * tetrominoSize]],
-    position3: [[-1.5 * tetrominoSize, -0.5 * tetrominoSize], [-0.5 * tetrominoSize, -0.5 * tetrominoSize], [0.5 * tetrominoSize, -0.5 * tetrominoSize], [0.5 * tetrominoSize, 0.5 * tetrominoSize]],
-    position4: [[-0.5 * tetrominoSize, -1.5 * tetrominoSize], [-0.5 * tetrominoSize, -0.5 * tetrominoSize], [-0.5 * tetrominoSize, 0.5 * tetrominoSize], [-1.5 * tetrominoSize, 0.5 * tetrominoSize]]
+    position1: [[-1.5, -1.5], [-1.5, -0.5],  [-0.5, -0.5],  [0.5, -0.5]],
+    position2: [[-0.5, -1.5], [0.5,  -1.5], [-0.5, -0.5], [-0.5, 0.5]],
+    position3: [[-1.5, -0.5], [-0.5, -0.5], [0.5, -0.5], [0.5, 0.5]],
+    position4: [[-0.5, -1.5], [-0.5, -0.5], [-0.5, 0.5], [-1.5, 0.5]]
   },
   L: {
-    position1: [[-1.5 * tetrominoSize, -0.5 * tetrominoSize], [-0.5 * tetrominoSize, -0.5 * tetrominoSize],  [0.5 * tetrominoSize, -0.5 * tetrominoSize],  [0.5 * tetrominoSize, -1.5 * tetrominoSize]],
-    position2: [[-0.5 * tetrominoSize, -1.5 * tetrominoSize], [-0.5 * tetrominoSize, -0.5 * tetrominoSize], [-0.5 * tetrominoSize, 0.5 * tetrominoSize], [0.5 * tetrominoSize, 0.5 * tetrominoSize]],
-    position3: [[-1.5 * tetrominoSize, -0.5 * tetrominoSize], [-1.5 * tetrominoSize, 0.5 * tetrominoSize], [-0.5 * tetrominoSize, -0.5 * tetrominoSize], [0.5 * tetrominoSize, -0.5 * tetrominoSize]],
-    position4: [[-1.5 * tetrominoSize, -1.5 * tetrominoSize], [-0.5 * tetrominoSize, -1.5 * tetrominoSize], [-0.5 * tetrominoSize, -0.5 * tetrominoSize], [-0.5 * tetrominoSize, 0.5 * tetrominoSize]],
+    position1: [[-1.5, -0.5], [-0.5 , -0.5],  [0.5, -0.5],  [0.5, -1.5]],
+    position2: [[-0.5, -1.5], [-0.5 , -0.5], [-0.5, 0.5], [0.5, 0.5]],
+    position3: [[-1.5, -0.5], [-1.5 , 0.5], [-0.5, -0.5], [0.5, -0.5]],
+    position4: [[-1.5, -1.5], [-0.5 , -1.5], [-0.5, -0.5], [-0.5, 0.5]],
   },
   O : {
-    position1: [[-tetrominoSize, -tetrominoSize], [0, -tetrominoSize],  [-tetrominoSize, 0],  [0, 0]],
+    position1: [[-1, -1], [0, -1],  [-1, 0],  [0, 0]],
   },
   S: {
-    position1: [[-1.5 * tetrominoSize , -0.5 * tetrominoSize], [-0.5 * tetrominoSize, -0.5 * tetrominoSize],  [-0.5 * tetrominoSize, -1.5 * tetrominoSize],  [0.5 * tetrominoSize, -1.5 * tetrominoSize]],
-    position2: [[-0.5 * tetrominoSize, -1.5 * tetrominoSize], [-0.5 * tetrominoSize,-0.5 * tetrominoSize], [0.5 * tetrominoSize, -0.5 * tetrominoSize], [0.5 * tetrominoSize, 0.5 * tetrominoSize]],
+    position1: [[-1.5, -0.5], [-0.5, -0.5],  [-0.5, -1.5],  [0.5, -1.5]],
+    position2: [[-0.5, -1.5], [-0.5, -0.5], [0.5, -0.5], [0.5, 0.5]],
   },
   T: {
-    position1: [[-1.5 * tetrominoSize, -.5 * tetrominoSize], [-0.5 * tetrominoSize, -0.5 * tetrominoSize],  [-0.5 * tetrominoSize, -1.5 * tetrominoSize],  [0.5 * tetrominoSize, -0.5 * tetrominoSize]],
-    position2: [[-0.5 * tetrominoSize, -1.5 * tetrominoSize], [-0.5 * tetrominoSize, -0.5 * tetrominoSize], [0.5 * tetrominoSize, -0.5 * tetrominoSize], [-0.5 * tetrominoSize, 0.5 * tetrominoSize]],
-    position3: [[-1.5 * tetrominoSize, -0.5 * tetrominoSize], [-0.5 * tetrominoSize, -0.5 * tetrominoSize], [0.5 * tetrominoSize, -0.5 * tetrominoSize], [-0.5 * tetrominoSize, 0.5 * tetrominoSize]],
-    position4: [[-1.5 * tetrominoSize, -0.5 * tetrominoSize], [-0.5 * tetrominoSize, -1.5 * tetrominoSize], [-0.5 * tetrominoSize, -0.5 * tetrominoSize], [-0.5 * tetrominoSize, 0.5 * tetrominoSize ]],
+    position1: [[-1.5, -.5], [-0.5, -0.5],  [-0.5, -1.5],  [0.5, -0.5]],
+    position2: [[-0.5, -1.5], [-0.5, -0.5], [0.5, -0.5], [-0.5, 0.5]],
+    position3: [[-1.5, -0.5], [-0.5, -0.5], [0.5, -0.5], [-0.5, 0.5]],
+    position4: [[-1.5, -0.5], [-0.5, -1.5], [-0.5, -0.5], [-0.5, 0.5]],
   },
   Z: {
-    position1: [[-1.5 * tetrominoSize, -1.5 * tetrominoSize], [-0.5 * tetrominoSize, -1.5 * tetrominoSize],  [-0.5 * tetrominoSize, -0.5 * tetrominoSize],  [0.5 * tetrominoSize, -0.5 * tetrominoSize]],
-    position2: [[-0.5 * tetrominoSize, -0.5 * tetrominoSize], [-0.5 * tetrominoSize, 0.5 * tetrominoSize], [0.5 * tetrominoSize, -0.5 * tetrominoSize], [0.5 * tetrominoSize, -1.5 * tetrominoSize]],
+    position1: [[-1.5, -1.5], [-0.5, -1.5],  [-0.5, -0.5],  [0.5, -0.5]],
+    position2: [[-0.5, -0.5], [-0.5, 0.5], [0.5, -0.5], [0.5, -1.5]],
   }
 }
 
@@ -77,7 +77,7 @@ export const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
 export const gameState: GameState = {
   ...spawn(),
   rotation: 0,
-  dy: tetrominoSize/gravity,
+  framesTillDrop: gravity,
   lockedCells: [],
   lockDelayFrame: -1,
 };
