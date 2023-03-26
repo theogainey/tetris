@@ -20,8 +20,27 @@ function noWallCollision(newXCurrent: number) {
   });
 }
 
+function hardDrop() {
+  const { offsets } = tetrominos[gameState.typeCurrent]; 
+  const yOffsetsCurrent = offsets[gameState.rotation].map(([_x,y])=>y + gameState.yCurrent); 
+  const xOffsetsCurrent = offsets[gameState.rotation].map(([x,_y])=>x + gameState.xCurrent); 
+  const highestCurrentY = Math.max(...yOffsetsCurrent);
+  const cellsToCheck = gameState.lockedCells.filter(({xStart, yStart}) => xOffsetsCurrent.includes(xStart) && yStart > highestCurrentY);
+  if(cellsToCheck.length === 0){
+    const referenceCell =  yOffsetsCurrent.find((y) => y === highestCurrentY) as number;
+    const yOffset = referenceCell - gameState.yCurrent;
+    gameState.yCurrent = 19 - yOffset;
+    return
+  }
+  const newFloor = Math.min(...cellsToCheck.map(({yStart})=> yStart));
+  const newFloorCell =  cellsToCheck.find(({yStart})=> yStart === newFloor) as LockedCell;
+  const offsetsThatAlignWithNewFloorCell = offsets[gameState.rotation].filter(([x,_y]) => x + gameState.xCurrent === newFloorCell.xStart);
+  const yOffsetOfCellThatWillHitFloor = Math.max(...offsetsThatAlignWithNewFloorCell.map(([_x,y])=>y));
+  gameState.yCurrent = newFloor - 1 - yOffsetOfCellThatWillHitFloor;
+}
+
 export default function eventListeners() {
-  window.addEventListener("keydown", (event) => {
+  window.addEventListener("keydown", (event) => {    
     switch (event.key) {
       case 'ArrowRight':
         if(noHorizontalCollisionCheck(gameState.xCurrent + 1)){
@@ -44,6 +63,12 @@ export default function eventListeners() {
           gameState.rotation = oldRotation;
         }
       return;
+      case 'ArrowDown': 
+        gameState.framesTillDrop = gameState.framesTillDrop - 48
+      return
+      case ' ':
+        hardDrop();
+        return;
       default:
         return;
     }
