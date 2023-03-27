@@ -11,6 +11,6 @@ export function spawn() {
   return {
     typeCurrent: typeCurrent,
     xCurrent: shouldSpawnCenter(typeCurrent) ? 5 : 4.5,
-    yCurrent: shouldSpawnCenter(typeCurrent) ? 1 : 0.5,   
+    yCurrent: shouldSpawnCenter(typeCurrent) ? -2 : -1.5,   
   }
 } 

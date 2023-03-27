@@ -17,4 +17,7 @@ npm run dev
 
 Feature | Description | Priority
 --- | --- | ---
+Lock Delay Bug |  | High
 Wall Kicks | [link](https://tetris.fandom.com/wiki/Wall_kick) | Medium
+
+
