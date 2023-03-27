@@ -54,7 +54,7 @@ export default function update():void{
     return;
   }
   gameState.lockDelayFrame = -1;
-
+  if(noVerticalCollisionCheck()) return;
   // if hitting floor add to cells
   tetrominos[gameState.typeCurrent].offsets[gameState.rotation].forEach(([xOffset, yOffset]) => {    
     gameState.lockedCells.push({
