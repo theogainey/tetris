@@ -8,16 +8,37 @@
         padding: 0;
         margin: 0;
       }
-      canvas {
-        background: #eee;
-        display: block;
+      body{
+        background-color: #202124;
+        display: flex;
+      }
+      .game{
         margin: 1rem auto;
+        margin-top: 2rem;
+        display: flex;
+      }
+      canvas {
+        background: #303134;
+        border: 1px solid #fff;
+        display: block;
+      }
+
+      #next{
+        margin-left: 1rem;
       }
     </style>
   </head>
   <body>
-    <canvas id="myCanvas" width="300" height="601"></canvas>
+    <div class="game">
+      <div>
+        <canvas id="playArea" width="300" height="600"></canvas>
+      </div>
+      <div>
+        <canvas id="next" width="150" height="90"></canvas>
+      </div>
+    </div>
     <script src="main.js">
     </script>
+
   </body>
 </html>

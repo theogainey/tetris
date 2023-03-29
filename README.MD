@@ -17,6 +17,9 @@ npm run dev
 
 Feature | Description | Priority
 --- | --- | ---
+ITCSS | organize styles into external stylesheet | High
 Wall Kicks | [link](https://tetris.fandom.com/wiki/Wall_kick) | Medium
+Tetromino Swap | Swap current tetromino for next Tetromino | low
+Optional Onscreen Keyboard | accessible keyboard for users that don't have a hardware keyboard | very low
 
 

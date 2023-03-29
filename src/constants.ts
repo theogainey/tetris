@@ -1,4 +1,4 @@
-import { spawn } from "./utility";
+import { randomTetromino, spawn } from "./utility";
 
 export const tetrominoSize = 30;
 export const gravity = 48; // frames it takes to fall 1 line;
@@ -41,37 +41,38 @@ const tetrominoPositions = {
 
 export const tetrominos: Record<TetrominoTypes, TetrominoTypeDetails> = {
   I: {
-    color: '#6EECEE',
+    color: '#22d3ee',
     offsets: [tetrominoPositions['I'].position1, tetrominoPositions['I'].position2],
   },
   J: {
-    color: '#0000E6',
+    color: '#818cf8',
     offsets: [tetrominoPositions['J'].position1, tetrominoPositions['J'].position2, tetrominoPositions['J'].position3, tetrominoPositions['J'].position4],
   },
   L: {
-    color: '#E4A439',
+    color: '#fb923c',
     offsets: [tetrominoPositions['L'].position1, tetrominoPositions['L'].position2, tetrominoPositions['L'].position3, tetrominoPositions['L'].position4],
   },
   O: {
-    color: '#E3E34B',
+    color: '#facc15',
     offsets: [tetrominoPositions['O'].position1],
   },
   S: {
-    color: '#6EEC47',
+    color: '#4ade80',
     offsets: [tetrominoPositions['S'].position1, tetrominoPositions['S'].position2],
   },
   T: {
-    color: '#921CE7',
+    color: '#c084fc',
     offsets: [tetrominoPositions['T'].position1, tetrominoPositions['T'].position2, tetrominoPositions['T'].position3, tetrominoPositions['T'].position4],
   },
   Z: {
-    color: '#DC2F21',
+    color: '#fb7185',
     offsets: [tetrominoPositions['Z'].position1,tetrominoPositions['Z'].position2],
   },
 }
 
-export const canvas = document.getElementById("myCanvas") as HTMLCanvasElement;
+export const canvas = document.getElementById("playArea") as HTMLCanvasElement;
 
+export const tetrominoHistory = {next: randomTetromino()};
 
 // gameState
 export const gameState: GameState = {

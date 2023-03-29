@@ -19,11 +19,24 @@ function drawTetromino(ctx: CanvasRenderingContext2D, type: TetrominoTypeDetails
 }
 
 
+function renderNext() {
+  const nextCanvas = document.getElementById("next") as HTMLCanvasElement;
+
+  const nextCanvasCTX = nextCanvas.getContext("2d") as CanvasRenderingContext2D;
+  const tetrominoType = tetrominos[gameState.typeNext];
+  const yStart = gameState.typeNext === 'O' ?  1.5 : 2;
+  nextCanvasCTX.clearRect(0, 0, canvas.width, canvas.height);
+  tetrominoType.offsets[0].forEach(([xOffset, yOffset])=>{
+    drawCell(nextCanvasCTX, tetrominos[gameState.typeNext].color, 2.5 + xOffset, yStart + yOffset)
+  })
+
+}
+
 export default function render() {
   const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawTetromino(ctx, tetrominos[gameState.typeCurrent], gameState.xCurrent, gameState.yCurrent);
-  
+  renderNext();
   gameState.lockedCells.forEach(({color, xStart, yStart})=> {
     drawCell(ctx, color, xStart, yStart);
   });

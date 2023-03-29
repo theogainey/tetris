@@ -70,6 +70,7 @@ export default function update():void{
   gameState.xCurrent = newTetromino.xCurrent;
   gameState.yCurrent = newTetromino.yCurrent;
   gameState.typeCurrent = newTetromino.typeCurrent;
+  gameState.typeNext = newTetromino.typeNext;
   gameState.rotation = 0;
 
 };
