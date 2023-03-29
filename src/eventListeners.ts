@@ -23,7 +23,7 @@ function noWallCollision(newXCurrent: number) {
 function hardDrop() {
   const { offsets } = tetrominos[gameState.typeCurrent]; 
   const yOffsetsCurrent = offsets[gameState.rotation].map(([_x,y])=>y + gameState.yCurrent); 
-  const xOffsetsCurrent = offsets[gameState.rotation].map(([x,_y])=>x + gameState.xCurrent); 
+  const xOffsetsCurrent = offsets[gameState.rotation].map(([x,_y])=>x + gameState.xCurrent);   
   const highestCurrentY = Math.max(...yOffsetsCurrent);
   const cellsToCheck = gameState.lockedCells.filter(({xStart, yStart}) => xOffsetsCurrent.includes(xStart) && yStart > highestCurrentY);
   if(cellsToCheck.length === 0){
@@ -33,8 +33,9 @@ function hardDrop() {
     return
   }
   const newFloor = Math.min(...cellsToCheck.map(({yStart})=> yStart));
-  const newFloorCell =  cellsToCheck.find(({yStart})=> yStart === newFloor) as LockedCell;
-  const offsetsThatAlignWithNewFloorCell = offsets[gameState.rotation].filter(([x,_y]) => x + gameState.xCurrent === newFloorCell.xStart);
+  const newFloorCells =  cellsToCheck.filter(({yStart})=> yStart === newFloor);
+  const newFloorCellXs = newFloorCells.map(({xStart})=> xStart);
+  const offsetsThatAlignWithNewFloorCell = offsets[gameState.rotation].filter(([x,_y]) => newFloorCellXs.includes(x + gameState.xCurrent));
   const yOffsetOfCellThatWillHitFloor = Math.max(...offsetsThatAlignWithNewFloorCell.map(([_x,y])=>y));
   gameState.yCurrent = newFloor - 1 - yOffsetOfCellThatWillHitFloor;
 }
