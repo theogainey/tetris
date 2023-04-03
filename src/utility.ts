@@ -1,4 +1,4 @@
-import { tetrominoHistory } from "./constants";
+import { gameState, tetrominoHistory } from "./constants";
 
 export function randomTetromino() {
   const tetrominos:TetrominoTypes[] = ['I', 'J', 'L', 'O', 'S', 'T', 'Z'];
@@ -7,6 +7,26 @@ export function randomTetromino() {
 }
 function shouldSpawnCenter(tetrominoType:TetrominoTypes) {
   return tetrominoType === 'I' || tetrominoType === 'O';
+}
+
+export function score(lines:number){
+  const {score, level} = gameState;
+  if(lines === 1){
+    gameState.score = score + (level * 40);
+    return;
+  }
+  if(lines === 2){
+    gameState.score = score + (level * 100);
+    return;
+  }
+  if(lines === 3){
+    gameState.score = score + (level * 300);
+    return;
+  }
+  if(lines === 4){
+    gameState.score = score + (level * 1200);
+    return;
+  }
 }
 
 export function spawn() {

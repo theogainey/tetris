@@ -1,5 +1,5 @@
 import { tetrominos, gameState, gravity } from "./constants";
-import { spawn } from './utility'
+import { score, spawn } from './utility'
 
 function noVerticalCollisionCheck() {
   const offsets = tetrominos[gameState.typeCurrent].offsets; 
@@ -31,6 +31,8 @@ function clearRows(){
       yStart: cell.yStart + rowsClearedBelowCell.length,
     }
   })
+  score(rowsToClear.length);
+  gameState.linesCleared+=rowsToClear.length;
 }
 
 export default function update():void{ 
@@ -72,5 +74,5 @@ export default function update():void{
   gameState.typeCurrent = newTetromino.typeCurrent;
   gameState.typeNext = newTetromino.typeNext;
   gameState.rotation = 0;
-
+  gameState.level = Math.ceil((gameState.linesCleared + 1)/10);  
 };

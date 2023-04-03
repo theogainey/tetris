@@ -23,6 +23,9 @@ type GameState = {
   typeCurrent: TetrominoTypes;
   typeNext: TetrominoTypes;
   rotation: number;
+  linesCleared: number;
+  level: number;
+  score: number;
   framesTillDrop: number;
   lockedCells: LockedCell[];
   lockDelayFrame: number;

@@ -78,6 +78,9 @@ export const tetrominoHistory = {next: randomTetromino()};
 export const gameState: GameState = {
   ...spawn(),
   rotation: 0,
+  linesCleared: 0,
+  level: 1,
+  score: 0,
   framesTillDrop: gravity,
   lockedCells: [],
   lockDelayFrame: -1,
