@@ -1,7 +1,7 @@
 import { randomTetromino, spawn } from "./utility";
 
 export const tetrominoSize = 30;
-export const gravity = 48; // frames it takes to fall 1 line;
+export const gravity = [48, 43 ,38, 33, 28, 23, 18, 13, 8, 6, 5, 4, 3, 2, 1]; // frames it takes to fall 1 line;
 
 const tetrominoPositions = {
   I: {
@@ -81,7 +81,7 @@ export const gameState: GameState = {
   linesCleared: 0,
   level: 1,
   score: 0,
-  framesTillDrop: gravity,
+  framesTillDrop: gravity[0],
   lockedCells: [],
   lockDelayFrame: -1,
 };

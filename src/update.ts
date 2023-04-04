@@ -33,6 +33,7 @@ function clearRows(){
   })
   score(rowsToClear.length);
   gameState.linesCleared+=rowsToClear.length;
+  console.log(gameState.linesCleared, gameState.level);
 }
 
 export default function update():void{ 
@@ -42,7 +43,7 @@ export default function update():void{
       return;
     }
     if(gameState.lockDelayFrame === -1){
-      gameState.framesTillDrop = gravity;
+      gameState.framesTillDrop = gravity[gameState.level-1];
       gameState.yCurrent = gameState.yCurrent + 1;  
       return;
     }
@@ -75,4 +76,5 @@ export default function update():void{
   gameState.typeNext = newTetromino.typeNext;
   gameState.rotation = 0;
   gameState.level = Math.ceil((gameState.linesCleared + 1)/10);  
+  gameState.framesTillDrop= gravity[gameState.level-1];
 };
