@@ -31,12 +31,20 @@ function renderNext() {
   })
 
 }
-
+function renderScore(){
+  const levelElement = document.getElementById('level') as HTMLElement;
+  levelElement.innerText = `${gameState.level}`
+  const scoreElement = document.getElementById('score') as HTMLElement;
+  scoreElement.innerText = `${gameState.score}`
+  const linesElement = document.getElementById('lines') as HTMLElement;
+  linesElement.innerText = `${gameState.linesCleared}`
+}
 export default function render() {
   const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawTetromino(ctx, tetrominos[gameState.typeCurrent], gameState.xCurrent, gameState.yCurrent);
   renderNext();
+  renderScore();
   gameState.lockedCells.forEach(({color, xStart, yStart})=> {
     drawCell(ctx, color, xStart, yStart);
   });

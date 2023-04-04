@@ -9,6 +9,7 @@
         margin: 0;
       }
       body{
+        font-family: 'Open Sans', sans-serif;
         background-color: #202124;
         display: flex;
       }
@@ -22,10 +23,25 @@
         border: 1px solid #fff;
         display: block;
       }
-
-      #next{
+      .info{
         margin-left: 1rem;
       }
+      .score-area{
+        margin-top: 2rem;
+        background: #303134;
+        border: 1px solid #fff;
+        display: flex;
+        flex-direction: column;
+      }
+    .score-area__item{
+      height: 3rem;
+      color: #fff;
+      font-size: 1.5rem;
+      line-height: 2;
+      padding: 0 1rem;
+      display: flex;
+      justify-content: space-between;
+    }
     </style>
   </head>
   <body>
@@ -33,8 +49,14 @@
       <div>
         <canvas id="playArea" width="300" height="600"></canvas>
       </div>
-      <div>
+      <div class="info">
         <canvas id="next" width="150" height="90"></canvas>
+        <div class="score-area">
+          <span class="score-area__item">Level <span id="level"></span></span>
+          <span class="score-area__item">Score <span id="score"></span></span>
+          <span class="score-area__item">Line <span id="lines"></span></span>
+        </div>
+
       </div>
     </div>
     <script src="main.js">
